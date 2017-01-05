@@ -1,6 +1,7 @@
 $(document).ready(function() {
 //feed to parse
 
+
 function getFeed(){
   const textarea = document.getElementById('rssfeed');
   textarea.innerHTML="";
@@ -26,25 +27,22 @@ const url = 'http://lorem-rss.herokuapp.com/feed?unit=minute';
       chrome.browserAction.setBadgeText({ text: String(counter)});
       counter++;
       }
-      chrome.storage.sync.get("value", function(items) {
+      chrome.storage.local.get("value", function(items) {
          
-         console.log(feed.entries[0].title);
-         console.log(items);
-         console.log(items.value[1]);
-         console.log(items.value.length);
-         for(var i=0;i<items.value.length;i++){
-            if($.inArray(feed.entries.guid,items.value[0] ) !==-1){
-               
-               var opt = {
+        // console.log(feed.entries[0].title);
+        // console.log(items);
+        // console.log(items.value[1]);
+        // console.log(items.value.length);
+        if(feed.entries[0].guid!==items.value[0]){
+                var opt = {
                type: "basic",
-               title: feed.entries[i].title,
-               message: feed.entries[i].link,
+               title: feed.entries[0].title,
+               message: feed.entries[0].link,
                iconUrl: "icon.png"
 };
-
       chrome.notifications.create( opt);
-            }else console.log("failed");
-         }
+               }
+         
          
          
          
@@ -57,12 +55,15 @@ const url = 'http://lorem-rss.herokuapp.com/feed?unit=minute';
       
       
       
-      chrome.storage.sync.set({'value': storageOfCurrentFeed}, function() {
+      chrome.storage.local.set({'value': storageOfCurrentFeed}, function() {
           // Notify that we saved.
           console.log('Settings saved');
         });
       
-      
+      chrome.browserAction.onClicked.addListener(function () {
+  
+  chrome.browserAction.setBadgeText({ text: String("0")});
+  });
       
       
       
@@ -73,7 +74,7 @@ const url = 'http://lorem-rss.herokuapp.com/feed?unit=minute';
         
 }
 
-setInterval(getFeed,60000);
+setInterval(getFeed,10000);
 getFeed();
 
 
