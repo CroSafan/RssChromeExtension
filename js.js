@@ -9,7 +9,7 @@ function getFeed(){
    storageOfSync=new Object();
    chrome.browserAction.setBadgeBackgroundColor({color: "#CF0016"});
    //https://www.mev.hr/index.php/category/racunarstvo-rss/racunarstvo/feed/
-const url = 'http://lorem-rss.herokuapp.com/feed?unit=second';
+const url = 'http://lorem-rss.herokuapp.com/feed?unit=minute';
   
   feednami.load(url)
     .then(feed => {
@@ -27,19 +27,24 @@ const url = 'http://lorem-rss.herokuapp.com/feed?unit=second';
       counter++;
       }
       chrome.storage.sync.get("value", function(items) {
+         
+         console.log(feed.entries[0].title);
          console.log(items);
-         for(var i =0; i<items.value.length;i++){
-         //console.log(storageOfCurrentFeed.entries[i]["rss:guid"]["#"]);
-        /* if(items.value[i]===storageOfCurrentFeed.entries[i]["rss:guid"]["#"]){
-            var notification = webkitNotifications.createNotification(
-  'MEV_LOGO.jpg',  // icon url - can be relative
-  storageOfCurrentFeed.entries[i]["rss:title"]["#"],  // notification title
-  storageOfCurrentFeed.entries[i]["rss:link"]["#"] // notification body text
-);
-            
-            notification.show();
-         }*/
-      }
+         console.log(items.value[1]);
+         console.log(items.value.length);
+         for(var i=0;i<items.value.length;i++){
+            if($.inArray(feed.entries.guid,items.value[0] ) !==-1){
+               
+               var opt = {
+               type: "basic",
+               title: feed.entries[i].title,
+               message: feed.entries[i].link,
+               iconUrl: "icon.png"
+};
+
+      chrome.notifications.create( opt);
+            }else console.log("failed");
+         }
          
          
          
@@ -57,14 +62,7 @@ const url = 'http://lorem-rss.herokuapp.com/feed?unit=second';
           console.log('Settings saved');
         });
       
-      var opt = {
-  type: "basic",
-  title: "Primary Title",
-  message: "Primary message to display",
-  iconUrl: "icon.png"
-};
-var id=0;
-      chrome.notifications.create( opt);
+      
       
       
       
@@ -75,7 +73,7 @@ var id=0;
         
 }
 
-setInterval(getFeed,1000000);
+setInterval(getFeed,60000);
 getFeed();
 
 
