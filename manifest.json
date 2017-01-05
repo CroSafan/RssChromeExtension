@@ -4,6 +4,14 @@
   "name": "MEV Rss",
   "description": "This extension shows the current feed from mev.hr",
   "version": "1.0",
+ 
+  "content_scripts": [
+    {
+      
+      "matches": ["http://*/*"],
+      "js": ["jquery.min.js", "js.js","feednami-client-v1.1.js"]
+    }
+  ],
 
   "browser_action": {
     "default_icon": "icon.png",
@@ -11,6 +19,11 @@
   },
   "permissions": [
     "activeTab",
-    "https://ajax.googleapis.com/"
+    "https://ajax.googleapis.com/",
+    "storage",
+    "notifications"
+  ],
+  "web_accessible_resources": [
+    "MEV_LOGO.jpg"
   ]
 }
