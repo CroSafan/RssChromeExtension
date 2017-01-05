@@ -8,7 +8,11 @@ const url = 'https://www.mev.hr/index.php/category/racunarstvo-rss/racunarstvo/f
       textarea.value = '';
       console.log(feed);
       for(let entry of feed.entries){
-        textarea.innerHTML +="<div class='rrs-item' style='margin: 0 auto; width: 500x; height: auto;border: solid 1px black;' >"+"<b>"+ entry.title+"</b>"+'<p>'+entry.description+'</p>'+"</div>";
+        var content="";
+        content +="<div class='rrs-item' style='margin: 0 auto; width: 450px; height: auto;border: solid 1px black;display:block;text-overflow:ellipsis;' >"+"<b>"+ entry.title+"</b>";
+      content+='<p><a href="'+entry.link+'">'+entry.link+'</a></p>'+"</div>";
+      
+      textarea.innerHTML+=content;
       }
     });
 });
