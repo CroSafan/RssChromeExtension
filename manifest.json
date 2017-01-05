@@ -8,12 +8,12 @@
   "content_scripts": [
     {     
       "matches": ["http://*/*"],
-      "js": ["jquery.min.js", "popup.js","feednami-client-v1.1.js"]
+      "js": [ "popup.js","jquery-1.10.2.min.js","feednami-client-v1.1.js"]
     }
   ],
   "background": {
     "matches": ["http://*/*"],
-    "scripts": ["background.js","jquery.min.js","feednami-client-v1.1.js"]
+    "scripts": ["jquery-1.10.2.min.js","background.js","feednami-client-v1.1.js"]
   },
 
   "browser_action": {
