@@ -9,9 +9,10 @@ $(document).ready(function() {
       storageOfCurrentFeed = new Array();
       
       chrome.browserAction.setBadgeBackgroundColor({color: "#CF0016"});
-      //https://www.mev.hr/index.php/category/racunarstvo-rss/racunarstvo/feed/
+      //
+      //http://lorem-rss.herokuapp.com/feed?unit=minute
       //feed to parse
-       const url = 'http://lorem-rss.herokuapp.com/feed?unit=minute';
+       const url = 'https://www.mev.hr/index.php/category/racunarstvo-rss/racunarstvo/feed/';
      
      feednami.load(url)
        .then(feed => {      
