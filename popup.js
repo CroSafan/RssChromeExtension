@@ -15,14 +15,16 @@ function getFeed(){
     .then(feed => {
       textarea.value = '';
       console.log(feed);      
-      
+   
       for(let entry of feed.entries){
         var content="";
-        content +="<div class='rss-item'>"+"<b>"+ entry.title+"</b>";
-        content+='<p><a href="'+entry.link+'">'+entry.link+'</a></p>'+"</div>";
+        
+        content +="<div class=' list-group-item'>";
+        content+='<a href="'+entry.link+'" target="_blank"><b>'+entry.title+'</b></a>';       
         storageOfCurrentFeed.push(entry.guid);  
         textarea.innerHTML+=content;     
-      }      
+      }
+      
       chrome.browserAction.setBadgeText({ text: String(0)});
     });   
         
