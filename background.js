@@ -9,10 +9,10 @@ $(document).ready(function() {
       storageOfCurrentFeed = new Array();
       
       chrome.browserAction.setBadgeBackgroundColor({color: "#CF0016"});
-      //
+      //https://www.mev.hr/index.php/category/racunarstvo-rss/racunarstvo/feed/
       //http://lorem-rss.herokuapp.com/feed?unit=minute
       //feed to parse
-       const url = 'https://www.mev.hr/index.php/category/racunarstvo-rss/racunarstvo/feed/';
+       const url = 'http://lorem-rss.herokuapp.com/feed?unit=minute';
      
      feednami.load(url)
        .then(feed => {      
@@ -27,12 +27,13 @@ $(document).ready(function() {
               //provjera ako je obavijest nova
               if(feed.entries[0].guid!==items.value[0]){
                     chrome.browserAction.setBadgeText({ text: String(notificationNumber)});
+                    var url=feed.entries[0].link;
                       var opt = {
                      type: "basic",
                      title: feed.entries[0].title,
                      message: feed.entries[0].link,
                      iconUrl: "icon.png"};                            
-                  chrome.notifications.create( opt);
+                  chrome.notifications.create(url,opt,function(notificationId){});                  
                   notificationNumber+=1;
               }
           }); 
@@ -43,7 +44,15 @@ $(document).ready(function() {
               });
        });        
    }
+   
+   
+   
+   chrome.notifications.onClicked.addListener(function(notificationId) {
+  chrome.tabs.create({url: notificationId});
+   chrome.notification.clear(id, clearCallback);
+}); 
    //provjera svakih 10 sekundi ako postoji nova obavijest
+
    setInterval(getFeed,10000);
    getFeed();
 

@@ -9,7 +9,7 @@ function getFeed(){
   //https://www.mev.hr/index.php/category/racunarstvo-rss/racunarstvo/feed/
   //http://lorem-rss.herokuapp.com/feed?unit=minute
   //feed to parse
-  const url = 'https://www.mev.hr/index.php/category/racunarstvo-rss/racunarstvo/feed/';
+  const url = 'http://lorem-rss.herokuapp.com/feed?unit=minute';
   
   feednami.load(url)
     .then(feed => {
@@ -19,8 +19,8 @@ function getFeed(){
       for(let entry of feed.entries){
         var content="";
         
-        content +="<div class=' list-group-item'>";
-        content+='<a href="'+entry.link+'" target="_blank"><b>'+entry.title+'</b></a>';       
+        content +="<div class=' list-group-item '>";
+        content+='<a  href="'+entry.link+'" target="_blank"><b><h5>'+entry.title+'<h5></b></a>';       
         storageOfCurrentFeed.push(entry.guid);  
         textarea.innerHTML+=content;     
       }
