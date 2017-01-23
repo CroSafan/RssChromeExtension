@@ -4,7 +4,7 @@
   "name": "MEV Rss",
   "description": "This extension shows the current feed from mev.hr",
   "version": "1.0",
- 
+    "options_page": "options.html",
   "content_scripts": [
     {     
       "matches": ["http://*/*"],

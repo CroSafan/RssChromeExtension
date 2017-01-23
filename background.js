@@ -12,9 +12,27 @@ $(document).ready(function() {
       //https://www.mev.hr/index.php/category/racunarstvo-rss/racunarstvo/feed/
       //http://lorem-rss.herokuapp.com/feed?unit=minute
       //feed to parse
-       const url = 'http://lorem-rss.herokuapp.com/feed?unit=minute';
-     
-     feednami.load(url)
+          var url = 'https://www.mev.hr/index.php/category/racunarstvo-rss/racunarstvo/feed/';
+          
+      chrome.storage.local.get("odabraniSmjer", function(items) {
+      switch(items.naziv){
+           case "racunarstvo":
+            url = 'https://www.mev.hr/index.php/category/racunarstvo-rss/racunarstvo/feed/';
+            break;
+          case "menadzment":
+            url = 'https://www.mev.hr/index.php/category/menadzment-rss/menadzment-turizma-i-sporta/feed/';
+            break;
+          case "odrziviRazvoj":
+            url = 'https://www.mev.hr/index.php/category/odrzivi-razvoj-rss/odrzivi-razvoj/feed/';
+            break;
+          case 'svi':
+            url = 'https://www.mev.hr/index.php/feed/';
+            break;
+          default :
+            url = 'https://www.mev.hr/index.php/feed/';
+            break;
+      }
+      feednami.load(url)
        .then(feed => {      
          console.log(feed);     
          
@@ -42,17 +60,17 @@ $(document).ready(function() {
                 // Notify that we saved.
                 console.log('Settings saved');
               });
-       });        
-   }
-   
+       }); 
+      });
+   }   
    
    
    chrome.notifications.onClicked.addListener(function(notificationId) {
-  chrome.tabs.create({url: notificationId});
+   chrome.tabs.create({url: notificationId});
    chrome.notification.clear(id, clearCallback);
+   notificationNumber--;
 }); 
    //provjera svakih 10 sekundi ako postoji nova obavijest
-
    setInterval(getFeed,10000);
    getFeed();
 
